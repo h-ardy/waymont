@@ -3,7 +3,7 @@
 Plain HTML, CSS and JavaScript. No build step, no framework. Open `index.html` in a browser to see it, or use the Live Server extension in VS Code.
 
 ```
-index.html               all pages (home, our work, prices, what we believe, meet us, get a price)
+index.html               all pages (home, our work, prices, what we believe, our team, get a price)
 assets/css/site.css      every style, colors at the top under :root
 assets/js/site.js        all animation and interaction, SETTINGS block at the top
 assets/js/lenis.min.js   smooth scrolling library (MIT license, don't edit)
@@ -19,7 +19,7 @@ Use VS Code's search (Ctrl+Shift+F / Cmd+Shift+F) for each of these:
 | `wanghardy10@gmail.com` | Contact email, shows twice | index.html |
 | `Southern Ohio` | Your area, shows in the hero, contact page, footer and page description | index.html |
 | `dillingerdetailing.com`, `Puzzle-Circle` | The two sites on the Our work page | index.html |
-| `Hardy Wang`, `Ethan` | Names, roles and bios on the Meet us page | index.html |
+| `Hardy Wang`, `Ethan` | Names, roles and bios on the Our Team page | index.html |
 | `<h2>Starter</h2>` | Start of the three plans (Starter, Professional, Premium) | index.html |
 | `Monthly help` | Monthly plan wording | index.html |
 | `© 2026` | Footer year | index.html |
