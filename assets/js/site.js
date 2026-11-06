@@ -89,7 +89,7 @@ var SITE = {
     var tr=title.getBoundingClientRect();
     var a=$$('.a',mA),b=$$('.b',mB);
     POS=a.map(function(n,i){var ra=n.getBoundingClientRect(),rb=b[i].getBoundingClientRect();return {ax:(ra.left-tr.left)*SCALE_A,ay:(ra.top-tr.top)*SCALE_A,bx:rb.left-tr.left,by:rb.top-tr.top}});
-    rowH=fsB*.92;
+    rowH=fsB*1.12;
     var lede=$('#lede');
     lede.style.setProperty('--ledeTop',(tr.top+rowH*2+fsB*.2+(narrow?24:36))+'px');
     fitScene();
