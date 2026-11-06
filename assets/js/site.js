@@ -33,7 +33,7 @@ var SITE = {
   /* ---------- routing with wipe ---------- */
   var views={};$$('.view').forEach(function(v){views[v.dataset.view]=v});
   var current=null,wipe=$('#wipe'),first=true;
-  var TITLES={home:'Waymont Solutions',philosophy:'Philosophy | Waymont Solutions',team:'Meet us | Waymont Solutions',work:'Our Portfolio | Waymont Solutions',prices:'Prices | Waymont Solutions',contact:'Get a free price | Waymont Solutions'};
+  var TITLES={home:'Waymont Solutions',philosophy:'Philosophy | Waymont Solutions',team:'Our Team | Waymont Solutions',work:'Our Portfolio | Waymont Solutions',prices:'Prices | Waymont Solutions',contact:'Get a free price | Waymont Solutions'};
   function show(target,anchor){
     Object.keys(views).forEach(function(k){views[k].classList.toggle('on',k===target)});
     current=target;document.title=TITLES[target];
@@ -74,7 +74,7 @@ var SITE = {
   var nw=$('#nw'),NW=WORDS.map(function(w){var e=document.createElement('span');e.textContent=w;nw.appendChild(e);return e}),ni=-1;
   function nextWord(){var prev=ni;ni=(ni+1)%NW.length;NW.forEach(function(e,k){e.classList.remove('cur','gone');if(k===ni)e.classList.add('cur');else if(k===prev)e.classList.add('gone')})}
   nextWord();if(!reduce)setInterval(function(){if(document.body.classList.contains('past'))nextWord()},2200);
-  var POS=[],SCALE_A=.6,fsB=0,rowH=0,drumTop=0;
+  var POS=[],SCALE_A=.6,STRETCH_A=52,SPACE_A=.12,fsB=0,rowH=0,drumTop=0;
   function measure(){
     if(current!=='home')return;
     var vw=innerWidth,vh=innerHeight,narrow=vw<860;
@@ -84,8 +84,12 @@ var SITE = {
     mA.style.fontSize=fsB+'px';mB.style.fontSize=fsB+'px';
     var gx=parseFloat(getComputedStyle(title).left),maxW=narrow?vw-2*gx:Math.min(vw*.6,vw-2*gx),bw=mB.getBoundingClientRect().width;
     if(bw>maxW){fsB*=maxW/bw;title.style.setProperty('--fsB',fsB+'px');mA.style.fontSize=fsB+'px';mB.style.fontSize=fsB+'px'}
-    var aw=mA.getBoundingClientRect().width,avail=vw-2*parseFloat(getComputedStyle(title).left);
-    SCALE_A=Math.min(1,(avail)/aw)*(narrow?.98:.86);
+    var avail=vw-2*parseFloat(getComputedStyle(title).left);
+    // before scrolling the one-line wordmark is twice its old size: the letters start condensed so the line still fits, then widen as they split
+    mA.style.fontStretch='108%';mA.style.letterSpacing='';
+    var base=Math.min(1,avail/mA.getBoundingClientRect().width)*(narrow?.98:.86);
+    mA.style.fontStretch=STRETCH_A+'%';mA.style.letterSpacing=SPACE_A+'em';
+    SCALE_A=Math.min(base*2.6,avail*.985/mA.getBoundingClientRect().width);
     var tr=title.getBoundingClientRect();
     var a=$$('.a',mA),b=$$('.b',mB);
     POS=a.map(function(n,i){var ra=n.getBoundingClientRect(),rb=b[i].getBoundingClientRect();return {ax:(ra.left-tr.left)*SCALE_A,ay:(ra.top-tr.top)*SCALE_A,bx:rb.left-tr.left,by:rb.top-tr.top}});
@@ -193,13 +197,14 @@ var SITE = {
       else{var j=i-L1.length,st=.02+j*.016;t=seg(p,st,st+.13);
         x=lerp(P.ax,P.bx,eIO(t));y=lerp(P.ay,P.by,eBounce(t));sc=lerp(SCALE_A,1,eIO(t));
         rot=Math.sin(t*Math.PI)*(j%2?-16:12)*(1-t*.6);}
+      var ws=Math.round(lerp(STRETCH_A,108,isW?t:eIO(t)));if(CH[i]._ws!==ws){CH[i]._ws=ws;CH[i].style.fontStretch=ws+'%';CH[i].firstElementChild.style.webkitTextStrokeWidth=lerp(.2,.28,(ws-STRETCH_A)/(108-STRETCH_A)).toFixed(3)+'em'}
       CH[i].style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
     }
     document.documentElement.style.setProperty('--mp',p.toFixed(3));
   }
 
   /* ---------- marquee ---------- */
-  (function(){var m=$('#marq'),h='',n=0;for(var r=0;r<2;r++)WORDS.forEach(function(w,i){h+='<span'+(i%2?' class="alt"':'')+'>solutions for '+w+'</span>';n++;if(n%3===0)h+='<span class="you">websites for you</span>'});m.innerHTML=h})();
+  (function(){var m=$('#marq'),h='',n=0;for(var r=0;r<2;r++)WORDS.forEach(function(w,i){h+='<span'+(i%2?' class="alt"':'')+'>solutions for '+w+'</span>';n++;if(n%3===0)h+='<span class="you">solutions for you</span>'});m.innerHTML=h})();
 
   /* ---------- stacking chapters: scale the one underneath ---------- */
   var CHAPS=$$('.story .chap');
