@@ -258,6 +258,9 @@ var SITE = {
   $$('.w',bigq).forEach(function(w){if(/^love/i.test(w.textContent)){w.classList.add('hlw');w.innerHTML='<mark class="hl">love</mark>'}});
   var BW=$$('.w',bigq),bchap=$('#belief-chap');
   $$('mark.hl',bchap).forEach(function(m,i){m.style.setProperty('--hd',(.25+i*.28)+'s')});
+  // footer mountain draws in once it scrolls into view
+  (function(){var fm=document.querySelector('footer .fmtn');if(!fm)return;if(!('IntersectionObserver' in window)||reduce){fm.classList.add('seen');return}
+    var fo=new IntersectionObserver(function(es){if(es[0].isIntersecting){fm.classList.add('seen');fo.disconnect()}},{threshold:.25});fo.observe(fm)})();
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add(e.target.tagName==='MARK'?'on':'grown');io.unobserve(e.target)}})},{threshold:.35});
     $$('mark.hl, .pillar').forEach(function(el){if(reduce){el.classList.add(el.tagName==='MARK'?'on':'grown')}else io.observe(el)});

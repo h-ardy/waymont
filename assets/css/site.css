@@ -426,14 +426,30 @@ textarea.in{min-height:150px;resize:vertical}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
 .rv.in-view{opacity:1;transform:none}
 
-/* ---------- footer ---------- */
+/* ---------- footer: links over an engraved mountain ---------- */
 footer{position:relative;z-index:2;padding:0 0 calc(clamp(12px,1.4vw,20px) + env(safe-area-inset-bottom,0px))}
-footer .fbox{border-radius:var(--r-l);background:var(--ink);color:var(--snow);padding:clamp(28px,3vw,44px);display:grid;grid-template-columns:1fr auto auto;gap:32px;align-items:start;font-size:15px}
-footer nav{display:flex;gap:22px;flex-wrap:wrap}
-footer nav a{text-decoration:none;color:#E4DBCB}
-footer nav a:hover{color:var(--moss)}
-footer .meta{color:#CBBFA9;text-align:right;line-height:1.7}
-@media (max-width:860px){footer .fbox{grid-template-columns:1fr;gap:20px}footer .meta{text-align:left}}
+footer .fbox{position:relative;overflow:hidden;border-radius:var(--r-l);background:var(--snow);color:var(--ink);font-size:15px}
+footer .ftop{position:relative;z-index:2;display:grid;grid-template-columns:1.3fr auto auto;gap:clamp(32px,5vw,88px);padding:clamp(28px,3.4vw,52px) clamp(24px,3.4vw,52px) 0}
+footer .fbrand p{margin:14px 0 0;max-width:30ch;color:var(--ink-2);line-height:1.55}
+footer .fbrand .fcopy{margin-top:18px;font-size:13px;color:var(--ink-3)}
+footer .fcol{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+footer .fcol h3{margin:0 0 6px;font:600 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+footer .fcol a{color:var(--ink);text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:background-size .3s cubic-bezier(.2,.7,.2,1)}
+footer .fcol a:hover{background-size:100% 1.5px}
+footer .fcol span{color:var(--ink-2);max-width:22ch;line-height:1.45}
+footer .fmtn{position:relative;margin-top:clamp(-40px,-2.6vw,-8px);line-height:0}
+footer .fmtn img{display:block;width:100%;height:auto;opacity:0;transform:scaleX(-1) translateY(24px);transition:opacity 1.1s ease,transform 1.4s cubic-bezier(.2,.7,.2,1)}
+footer .fpeak{position:absolute;left:36.2%;top:10.1%;width:clamp(14px,1.5vw,22px);height:auto;color:var(--ink);transform:translate(-50%,-92%) scale(.2);opacity:0;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,1.6,.5,1) .9s,opacity .3s .9s}
+footer .fmtn.seen img{opacity:1;transform:scaleX(-1)}
+footer .fmtn.seen .fpeak{opacity:1;transform:translate(-50%,-92%) scale(1)}
+@media (prefers-reduced-motion:reduce){footer .fmtn img,footer .fpeak{transition:none}}
+@media (max-width:860px){
+  footer .ftop{grid-template-columns:1fr 1fr;gap:28px 20px}
+  footer .fbrand{grid-column:1/-1}
+  footer .fmtn{margin-top:8px}
+  footer .fmtn img{width:220%;margin-left:-29.6%}
+  footer .fpeak{left:50.4%;top:10.1%;width:16px}
+}
 
 /* ---------- phone bar ---------- */
 .phonebar{display:none}
