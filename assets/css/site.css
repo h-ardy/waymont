@@ -331,7 +331,7 @@ main{position:relative;z-index:1}
   .tile,.tile.w7,.tile.w5,.tile.w4,.tile.w8{grid-column:span 12}
 }
 /* team */
-.person{grid-column:span 6;border-radius:var(--r-l);background:var(--snow);padding:14px 14px 30px;display:flex;flex-direction:column;gap:18px}
+.person{grid-column:span 4;border-radius:var(--r-l);background:var(--snow);padding:14px 14px 30px;display:flex;flex-direction:column;gap:18px}
 .portrait{position:relative;aspect-ratio:5/4;background:var(--sand-2);overflow:hidden;border-radius:calc(var(--r-l) - 8px)}
 .portrait svg{position:absolute;inset:0;width:100%;height:100%;transition:transform 1.1s var(--ease)}
 .person:hover .portrait svg{transform:scale(1.04) translateY(-2%)}
@@ -538,11 +538,12 @@ footer .meta{color:#CBBFA9;text-align:right;line-height:1.7}
 .team-box{position:relative;z-index:8;background:var(--sand);padding:clamp(14px,1.6vw,22px) 0}
 .tb{border-radius:var(--r-l);background:var(--snow);padding:clamp(36px,5vw,80px);display:flex;flex-direction:column;gap:clamp(28px,3vw,44px)}
 .tb h2{font-size:clamp(48px,7vw,116px);letter-spacing:-.055em;line-height:.9}
-.tb-people{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,20px)}
+.tb-people{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.4vw,20px)}
 .tb-p{display:flex;align-items:center;gap:22px;padding:22px;border-radius:var(--r-m);background:var(--sand);text-decoration:none;transition:transform .5s var(--ease),background-color .3s ease}
 .tb-p:hover{transform:translateY(-4px);background:var(--sand-2)}
 .tb-p .av{width:clamp(84px,8vw,120px);height:clamp(84px,8vw,120px);flex:none;border-radius:50%;background:var(--ink);color:var(--snow);display:grid;place-items:center;font:700 clamp(28px,2.6vw,40px) var(--display);letter-spacing:-.04em}
 .tb-p .av.e{background:var(--pine)}
+.tb-p .av.m{background:var(--ink-3)}
 .tb-p b{display:block;font-family:var(--display);font-weight:680;font-size:clamp(24px,2.2vw,34px);letter-spacing:-.03em}
 .tb-p span span{display:block;color:var(--ink-2);margin-top:6px;max-width:36ch}
 
@@ -659,3 +660,6 @@ mark.hl.on::before{transform:scaleX(1) rotate(-1.4deg) skewX(-6deg)}
 .badges .badge{margin-top:0!important}
 .roles{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
 .head.pine .pillar .occ{fill:var(--pine)}
+
+/* three people: stack avatar over name on mid-size screens so long names fit */
+@media (min-width:861px) and (max-width:1500px){.tb-p{flex-direction:column;align-items:flex-start}}

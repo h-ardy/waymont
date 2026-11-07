@@ -53,6 +53,14 @@ var SITE = {
     setTimeout(function(){show(target,anchor);wipe.classList.remove('cover');wipe.classList.add('leave');setTimeout(function(){wipe.classList.remove('leave')},650)},560);
   }
   addEventListener('hashchange',route);
+  // a link to the page you're already on (the logo or name on Home, or a menu item for the open page) glides back to the top instead of doing nothing
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||e.metaKey||e.ctrlKey||e.shiftKey)return;
+    var h=a.getAttribute('href').slice(1)||'home';
+    if(!views[h]||h!==current||(location.hash.slice(1)||'home')!==h)return;
+    e.preventDefault();closeMenu();
+    if(lenis)lenis.scrollTo(0,{duration:1.4});else scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  });
 
   /* ---------- menu ---------- */
   var drawer=$('#drawer'),menuBtn=$('#menuBtn');
@@ -74,7 +82,7 @@ var SITE = {
   var nw=$('#nw'),NW=WORDS.map(function(w){var e=document.createElement('span');e.textContent=w;nw.appendChild(e);return e}),ni=-1;
   function nextWord(){var prev=ni;ni=(ni+1)%NW.length;NW.forEach(function(e,k){e.classList.remove('cur','gone');if(k===ni)e.classList.add('cur');else if(k===prev)e.classList.add('gone')})}
   nextWord();if(!reduce)setInterval(function(){if(document.body.classList.contains('past'))nextWord()},2200);
-  var POS=[],SCALE_A=.6,STRETCH_A=52,SPACE_A=.12,fsB=0,rowH=0,drumTop=0;
+  var POS=[],SCALE_A=.6,STRETCH_A=50,SPACE_A=.05,LEDE_DY=0,fsB=0,rowH=0,drumTop=0;
   function measure(){
     if(current!=='home')return;
     var vw=innerWidth,vh=innerHeight,narrow=vw<860;
@@ -89,13 +97,18 @@ var SITE = {
     mA.style.fontStretch='108%';mA.style.letterSpacing='';
     var base=Math.min(1,avail/mA.getBoundingClientRect().width)*(narrow?.98:.86);
     mA.style.fontStretch=STRETCH_A+'%';mA.style.letterSpacing=SPACE_A+'em';
-    SCALE_A=Math.min(base*2.6,avail*.985/mA.getBoundingClientRect().width);
+    var edge=narrow?12:24,awA=mA.getBoundingClientRect().width,ahA=mA.getBoundingClientRect().height;
+    SCALE_A=(vw-2*edge)/awA;
     var tr=title.getBoundingClientRect();
     var a=$$('.a',mA),b=$$('.b',mB);
-    POS=a.map(function(n,i){var ra=n.getBoundingClientRect(),rb=b[i].getBoundingClientRect();return {ax:(ra.left-tr.left)*SCALE_A,ay:(ra.top-tr.top)*SCALE_A,bx:rb.left-tr.left,by:rb.top-tr.top}});
+    // start state: one line, centered across the screen, sitting lower toward the middle
+    var vh=innerHeight,lineH=ahA*SCALE_A,Yc=narrow?vh*.30:vh*.41;
+    var offX=(vw-awA*SCALE_A)/2-tr.left,offY=Yc-lineH/2-tr.top;
+    POS=a.map(function(n,i){var ra=n.getBoundingClientRect(),rb=b[i].getBoundingClientRect();return {ax:(ra.left-tr.left)*SCALE_A+offX,ay:(ra.top-tr.top)*SCALE_A+offY,bx:rb.left-tr.left,by:rb.top-tr.top}});
     rowH=fsB*1.12;
-    var lede=$('#lede');
-    lede.style.setProperty('--ledeTop',(tr.top+rowH*2+fsB*.2+(narrow?24:36))+'px');
+    var lede=$('#lede'),ledeEnd=tr.top+rowH*2+fsB*.2+(narrow?24:36);
+    lede.style.setProperty('--ledeTop',ledeEnd+'px');
+    LEDE_DY=Math.max(0,(Yc+lineH/2+(narrow?28:44))-ledeEnd);
     fitScene();
   }
 
@@ -197,9 +210,10 @@ var SITE = {
       else{var j=i-L1.length,st=.02+j*.016;t=seg(p,st,st+.13);
         x=lerp(P.ax,P.bx,eIO(t));y=lerp(P.ay,P.by,eBounce(t));sc=lerp(SCALE_A,1,eIO(t));
         rot=Math.sin(t*Math.PI)*(j%2?-16:12)*(1-t*.6);}
-      var ws=Math.round(lerp(STRETCH_A,108,isW?t:eIO(t)));if(CH[i]._ws!==ws){CH[i]._ws=ws;CH[i].style.fontStretch=ws+'%';CH[i].firstElementChild.style.webkitTextStrokeWidth=lerp(.2,.28,(ws-STRETCH_A)/(108-STRETCH_A)).toFixed(3)+'em'}
+      var ws=Math.round(lerp(STRETCH_A,108,isW?t:eIO(t)));if(CH[i]._ws!==ws){CH[i]._ws=ws;CH[i].style.fontStretch=ws+'%';CH[i].firstElementChild.style.webkitTextStrokeWidth=lerp(.14,.28,(ws-STRETCH_A)/(108-STRETCH_A)).toFixed(3)+'em'}
       CH[i].style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
     }
+    $('#lede').style.transform=LEDE_DY?'translateY('+(LEDE_DY*(1-tw)).toFixed(1)+'px)':'';
     document.documentElement.style.setProperty('--mp',p.toFixed(3));
   }
 
