@@ -19,7 +19,7 @@ Use VS Code's search (Ctrl+Shift+F / Cmd+Shift+F) for each of these:
 | `wanghardy10@gmail.com` | Contact email, shows twice | index.html |
 | `Southern Ohio` | Your area, shows in the hero, contact page, footer and page description | index.html |
 | `dillingerdetailing.com`, `Puzzle-Circle` | The two sites on the Our work page | index.html |
-| `Hardy Wang`, `Ethan` | Names, roles and bios on the Our Team page | index.html |
+| `HW`, `EC` | Names, roles and bios on the Our Team page | index.html |
 | `<h2>Starter</h2>` | Start of the three plans (Starter, Professional, Premium) | index.html |
 | `Monthly help` | Monthly plan wording | index.html |
 | `© 2026` | Footer year | index.html |

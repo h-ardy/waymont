@@ -87,16 +87,13 @@ var SITE = {
     if(current!=='home')return;
     var vw=innerWidth,vh=innerHeight,narrow=vw<860;
     // target (B) size: two stacked lines, as big as fits; A: one line
-    fsB=narrow?Math.min(vw*.18,96):Math.min(vw*.118,vh*.2,178);
+    fsB=narrow?Math.min(vw*.18,96):Math.min(vw*.118,vh*.15,160);
     title.style.setProperty('--fsB',fsB+'px');
     mA.style.fontSize=fsB+'px';mB.style.fontSize=fsB+'px';
     var gx=parseFloat(getComputedStyle(title).left),maxW=narrow?vw-2*gx:Math.min(vw*.6,vw-2*gx),bw=mB.getBoundingClientRect().width;
     if(bw>maxW){fsB*=maxW/bw;title.style.setProperty('--fsB',fsB+'px');mA.style.fontSize=fsB+'px';mB.style.fontSize=fsB+'px'}
     var avail=vw-2*parseFloat(getComputedStyle(title).left);
-    // before scrolling the one-line wordmark is twice its old size: the letters start condensed so the line still fits, then widen as they split
-    mA.style.fontStretch='108%';mA.style.letterSpacing='';
-    var base=Math.min(1,avail/mA.getBoundingClientRect().width)*(narrow?.98:.86);
-    mA.style.fontStretch=STRETCH_A+'%';mA.style.letterSpacing=SPACE_A+'em';
+    // the wordmark keeps the narrow cut the whole way (set in CSS); before scrolling it runs one line edge to edge
     var edge=narrow?12:24,awA=mA.getBoundingClientRect().width,ahA=mA.getBoundingClientRect().height;
     SCALE_A=(vw-2*edge)/awA;
     var tr=title.getBoundingClientRect();
@@ -210,7 +207,6 @@ var SITE = {
       else{var j=i-L1.length,st=.02+j*.016;t=seg(p,st,st+.13);
         x=lerp(P.ax,P.bx,eIO(t));y=lerp(P.ay,P.by,eBounce(t));sc=lerp(SCALE_A,1,eIO(t));
         rot=Math.sin(t*Math.PI)*(j%2?-16:12)*(1-t*.6);}
-      var ws=Math.round(lerp(STRETCH_A,108,isW?t:eIO(t)));if(CH[i]._ws!==ws){CH[i]._ws=ws;CH[i].style.fontStretch=ws+'%';CH[i].firstElementChild.style.webkitTextStrokeWidth=lerp(.14,.28,(ws-STRETCH_A)/(108-STRETCH_A)).toFixed(3)+'em'}
       CH[i].style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
     }
     $('#lede').style.transform=LEDE_DY?'translateY('+(LEDE_DY*(1-tw)).toFixed(1)+'px)':'';

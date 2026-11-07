@@ -143,10 +143,10 @@ main{position:relative;z-index:1}
 .scene .arrow{fill:var(--ink)}
 .copy{position:absolute;inset:0;pointer-events:none}
 .copy .wrap{position:relative;height:100%}
-.title{position:absolute;left:var(--gx);top:clamp(112px,17vh,170px);margin:0;font-family:'Anybody',var(--display);font-weight:760;font-stretch:108%;letter-spacing:.27em;line-height:1.12;font-size:var(--fsB);pointer-events:auto}
+.title{position:absolute;left:var(--gx);top:clamp(112px,17vh,170px);margin:0;font-family:'Anybody',var(--display);font-weight:760;font-stretch:50%;letter-spacing:.05em;line-height:1.12;font-size:var(--fsB);pointer-events:auto}
 .title .ch{position:absolute;left:0;top:0;white-space:pre;transform-origin:0 0;will-change:transform}
 .title .ch i{transition:transform .5s cubic-bezier(.34,1.56,.64,1),color .3s ease}
-.title .ch i{color:var(--sand);-webkit-text-stroke:.28em var(--ink);paint-order:stroke fill}
+.title .ch i{color:var(--sand);-webkit-text-stroke:.14em var(--ink);paint-order:stroke fill}
 .title .ch:hover i{transform:translateY(-10%) rotate(-4deg);-webkit-text-stroke-color:var(--pine)}
 .title .ch i.pk{-webkit-text-stroke-color:var(--pine)}
 .title .ch i{position:relative;transition:transform .5s cubic-bezier(.34,1.56,.64,1),-webkit-text-stroke-color .5s ease}
