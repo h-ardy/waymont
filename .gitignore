@@ -2,3 +2,11 @@
 Thumbs.db
 .vscode/
 studio/
+
+# Client sites live in their own repos; keep them out of the Waymont site
+clients/hitch-and-hustle/
+clients/simply-risen/
+clients/hitch-and-hustle-site*/
+clients/*.zip
+clients/*.patch
+clients/*.command
